@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paypal-webhook-simulator"
+version = "1.0.0"
+description = "CLI to generate and verify realistic PayPal webhook payloads for local testing"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Brandon", email = "saythewordillbethere@gmail.com"}
+]
+keywords = ["paypal", "webhook", "simulator", "testing", "hmac-sha256", "idempotency"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/brandon-makes/paypal-webhook-simulator"
+"Bug Tracker" = "https://github.com/brandon-makes/paypal-webhook-simulator/issues"
+
+[project.scripts]
+paypal-webhook-simulator = "paypal_webhook.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

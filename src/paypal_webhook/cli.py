@@ -24,16 +24,20 @@ def cmd_simulate(args):
 
 
 def cmd_verify(args):
-    with open(args.file) as f:
-        env = json.load(f)
-    ok = verify_signature(
-        env["body"].encode(),
-        env["headers"]["paypal-transmission-id"],
-        env["headers"]["paypal-transmission-time"],
-        env["webhook_id"],
-        args.secret,
-        env["headers"]["paypal-transmission-sig"],
-    )
+    try:
+        with open(args.file) as f:
+            env = json.load(f)
+        ok = verify_signature(
+            env["body"].encode(),
+            env["headers"]["paypal-transmission-id"],
+            env["headers"]["paypal-transmission-time"],
+            env["webhook_id"],
+            args.secret,
+            env["headers"]["paypal-transmission-sig"],
+        )
+    except (OSError, json.JSONDecodeError, KeyError, TypeError, AttributeError) as e:
+        print(f"INVALID (malformed envelope: {e.__class__.__name__})")
+        sys.exit(1)
     print("VALID" if ok else "INVALID")
     sys.exit(0 if ok else 1)
 

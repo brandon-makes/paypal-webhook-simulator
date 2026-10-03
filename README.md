@@ -20,13 +20,16 @@ cd paypal-webhook-simulator
 # No third-party packages required; just ensure Python 3.10+ is available
 python -m venv .venv
 source .venv/bin/activate
+
+# Run from the repo root with src on the path (or: pip install .)
+export PYTHONPATH=src
 ```
 
 ## Usage examples
 
 ### Simulate a webhook event
 ```bash
-python -m paypal_webhook.cli --secret s3cret simulate \
+python -m paypal_webhook --secret s3cret simulate \
     --event PAYMENT.CAPTURE.COMPLETED \
     --amount 49.99 \
     --currency EUR
@@ -36,14 +39,14 @@ The command prints a JSON envelope containing the signed headers and the event b
 ### Verify a saved envelope
 ```bash
 # Save the previous output to envelope.json
-python -m paypal_webhook.cli --secret s3cret verify \
+python -m paypal_webhook --secret s3cret verify \
     --file envelope.json
 ```
 Outputs `VALID` or `INVALID` and exits with status 0/1.
 
 ### Duplicate-delivery demo (idempotency)
 ```bash
-python -m paypal_webhook.cli stress \
+python -m paypal_webhook stress \
     --count 1000 \
     --duplicates 300 \
     --ttl 86400
